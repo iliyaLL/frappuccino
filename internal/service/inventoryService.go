@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"frappuccino/internal/models"
 	"frappuccino/internal/repository"
+	"log/slog"
 )
 
 type InventoryService interface {
@@ -16,10 +17,10 @@ type inventoryService struct {
 	inventoryRepo repository.InventoryRepository
 }
 
-func NewInventoryService(db *sql.DB) *inventoryService {
-	svc := &inventoryService{}
-	svc.inventoryRepo = repository.NewInventoryRepositoryWithPostgres(db)
-	return svc
+func NewInventoryService(db *sql.DB, logger *slog.Logger) *inventoryService {
+	return &inventoryService{
+		inventoryRepo: repository.NewInventoryRepositoryWithPostgres(db, logger),
+	}
 }
 
 func (s *inventoryService) Insert(name, unit string, quantity int, categories *[]string) error {

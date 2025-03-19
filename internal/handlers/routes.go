@@ -2,10 +2,12 @@ package handlers
 
 import (
 	"frappuccino/internal/service"
+	"log/slog"
 	"net/http"
 )
 
 type application struct {
+	logger       *slog.Logger
 	InventorySvc service.InventoryService
 	// add more services
 }
@@ -20,8 +22,9 @@ func NewApplication(inventorySvc service.InventoryService) *application {
 func (app *application) Routes() http.Handler {
 	router := http.NewServeMux()
 	commonMiddleware := []Middleware{
-		recoverPanic,
-		logRequest,
+		app.recoverPanic,
+		app.logRequest,
+		contentTypeJSON,
 	}
 
 	endpoints := map[string]http.HandlerFunc{

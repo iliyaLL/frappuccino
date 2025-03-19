@@ -24,7 +24,9 @@ func NewServer(port string, db *sql.DB, logger *slog.Logger) *server {
 }
 
 func (s *server) RunServer() {
-	app := handlers.NewApplication(service.NewInventoryService(s.db))
+	app := handlers.NewApplication(
+		service.NewInventoryService(s.db, s.logger),
+	)
 
 	srv := &http.Server{
 		Addr:     s.port,
