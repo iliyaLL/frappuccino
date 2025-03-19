@@ -5,6 +5,7 @@ import (
 	"errors"
 	"frappuccino/internal/models"
 	"log"
+	"log/slog"
 
 	"github.com/lib/pq"
 )
@@ -16,11 +17,15 @@ type InventoryRepository interface {
 }
 
 type InventoryRepositoryPostgres struct {
-	pq *sql.DB
+	pq     *sql.DB
+	logger *slog.Logger
 }
 
-func NewInventoryRepositoryWithPostgres(db *sql.DB) *InventoryRepositoryPostgres {
-	return &InventoryRepositoryPostgres{pq: db}
+func NewInventoryRepositoryWithPostgres(db *sql.DB, logger *slog.Logger) *InventoryRepositoryPostgres {
+	return &InventoryRepositoryPostgres{
+		pq:     db,
+		logger: logger,
+	}
 }
 
 func (model *InventoryRepositoryPostgres) Insert(name, unit string, quantity int, categories *[]string) error {
