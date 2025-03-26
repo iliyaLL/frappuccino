@@ -11,4 +11,7 @@ var (
 
 	ErrDuplicateInventory       = errors.New("models: duplicate inventory")
 	ErrInvalidEnumTypeInventory = errors.New("models: invalid enum type. Supported types: shots, ml, g, units")
+
+	ErrDuplicateMenuItem                 = errors.New("models: duplicate menu item")
+	ErrForeignKeyConstraintMenuInventory = errors.New("inventory does not exist")
 )
