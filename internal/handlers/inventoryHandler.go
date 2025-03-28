@@ -19,7 +19,7 @@ func (app *application) inventoryCreate(w http.ResponseWriter, r *http.Request) 
 
 	m, err := app.InventorySvc.Insert(inventory)
 	if err != nil {
-		status, body := mapErrorToResponse(err, m)
+		status, body := utils.MapErrorToResponse(err, m)
 		utils.SendJSONResponse(w, status, body)
 		return
 	}
@@ -30,7 +30,7 @@ func (app *application) inventoryCreate(w http.ResponseWriter, r *http.Request) 
 func (app *application) inventoryRetreiveAll(w http.ResponseWriter, r *http.Request) {
 	inventory, err := app.InventorySvc.RetrieveAll()
 	if err != nil {
-		status, body := mapErrorToResponse(err, nil)
+		status, body := utils.MapErrorToResponse(err, nil)
 		utils.SendJSONResponse(w, status, body)
 		return
 	}
@@ -42,7 +42,7 @@ func (app *application) inventoryRetrieveByID(w http.ResponseWriter, r *http.Req
 	id := r.PathValue("id")
 	inventory, err := app.InventorySvc.RetrieveByID(id)
 	if err != nil {
-		status, body := mapErrorToResponse(err, nil)
+		status, body := utils.MapErrorToResponse(err, nil)
 		utils.SendJSONResponse(w, status, body)
 		return
 	}
@@ -62,7 +62,7 @@ func (app *application) inventoryUpdateByID(w http.ResponseWriter, r *http.Reque
 
 	m, err := app.InventorySvc.Update(inventory, id)
 	if err != nil {
-		status, body := mapErrorToResponse(err, m)
+		status, body := utils.MapErrorToResponse(err, m)
 		utils.SendJSONResponse(w, status, body)
 		return
 	}
@@ -74,7 +74,7 @@ func (app *application) inventoryDeleteByID(w http.ResponseWriter, r *http.Reque
 	id := r.PathValue("id")
 	err := app.InventorySvc.Delete(id)
 	if err != nil {
-		status, body := mapErrorToResponse(err, nil)
+		status, body := utils.MapErrorToResponse(err, nil)
 		utils.SendJSONResponse(w, status, body)
 		return
 	}
